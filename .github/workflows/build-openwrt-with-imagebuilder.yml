@@ -194,10 +194,11 @@ on:
       kernel_repo:
         description: "Set the kernel repository"
         required: false
-        default: "ophub/kernel"
+        default: "zcanbin/kernel"
         type: choice
         options:
           - ophub/kernel
+          - zcanbin/kernel
       kernel_usage:
         description: "Set the tags of the stable kernel."
         required: false
@@ -211,12 +212,13 @@ on:
       builder_name:
         description: "Set OpenWrt builder signature."
         required: false
-        default: "ophub"
+        default: "zcanbin"
         type: choice
         options:
           - ophub
           - angel
           - yourname
+          - zcanbin
 
 env:
   TZ: America/New_York
@@ -288,12 +290,12 @@ jobs:
           rm -rf $(ls . | grep -v "^bin$" | xargs) 2>/dev/null
 
           [[ -d "/builder/openwrt" ]] || mkdir -p /builder/openwrt
-          ln -sf /builder/openwrt /home/runner/work/_actions/ophub/amlogic-s9xxx-openwrt/main/openwrt
+          ln -sf /builder/openwrt /home/runner/work/_actions/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}/openwrt
           df -hT ${PWD}
 
       - name: Packaging OpenWrt
         if: ${{ steps.imagebuilder.outputs.status }} == 'success' && !cancelled()
-        uses: ophub/amlogic-s9xxx-openwrt@main
+        uses: zcanbin/amlogic-s9xxx-openwrt@main
         with:
           openwrt_path: imagebuilder/bin/targets/*/*/*rootfs.tar.gz
           openwrt_board: ${{ inputs.openwrt_board }}

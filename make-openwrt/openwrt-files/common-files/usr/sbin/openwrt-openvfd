@@ -31,7 +31,7 @@
 openvfd_path="/usr/share/openvfd"
 openvfd_service="${openvfd_path}/vfdservice"
 # The openvfd files download repository
-openvfd_repo="https://github.com/ophub/amlogic-s9xxx-armbian.git"
+openvfd_repo="https://github.com/zcanbin/amlogic-s9xxx-armbian.git"
 openvfd_dir="build-armbian/armbian-files/platform-files/amlogic/rootfs/usr/share/openvfd"
 #
 # Set font color
