@@ -13,11 +13,12 @@ on:
       kernel_source:
         description: "Select the kernel source"
         required: false
-        default: "unifreq"
+        default: "zcanbin"
         type: choice
         options:
           - unifreq
           - codesnas
+          - zcanbin
       kernel_version:
         description: "Select kernel version"
         required: false
@@ -70,11 +71,12 @@ on:
       kernel_sign:
         description: "Set the kernel custom signature"
         required: false
-        default: "-ophub"
+        default: "-zcanbin"
         type: choice
         options:
           - -ophub
           - -yourname
+          - -zcanbin
 
 env:
   TZ: America/New_York
@@ -135,12 +137,12 @@ jobs:
         run: |
           df -hT ${PWD}
           mkdir -p /builder/{kernel,output}
-          ln -sf /builder/kernel /home/runner/work/_actions/ophub/amlogic-s9xxx-armbian/main/compile-kernel/kernel
-          ln -sf /builder/output /home/runner/work/_actions/ophub/amlogic-s9xxx-armbian/main/compile-kernel/output
+          ln -sf /builder/kernel /home/runner/work/_actions/${GITHUB_REPOSITORY_OWNER}/amlogic-s9xxx-armbian/${GITHUB_REF_NAME}/compile-kernel/kernel
+          ln -sf /builder/output /home/runner/work/_actions/${GITHUB_REPOSITORY_OWNER}/amlogic-s9xxx-armbian/${GITHUB_REF_NAME}/compile-kernel/output
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Compile the kernel [ ${{ inputs.kernel_version }} ]
-        uses: ophub/amlogic-s9xxx-armbian@main
+        uses: zcanbin/amlogic-s9xxx-armbian@main
         if: ${{ steps.mapped.outputs.status }} == 'success' && !cancelled()
         with:
           build_target: kernel

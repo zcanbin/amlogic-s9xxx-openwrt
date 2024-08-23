@@ -71,11 +71,12 @@ on:
       kernel_repo:
         description: "Set the kernel repository"
         required: false
-        default: "ophub/kernel"
+        default: "zcanbin/kernel"
         type: choice
         options:
           - ophub/kernel
           - breakings/OpenWrt
+          - zcanbin/kernel
       auto_kernel:
         description: "Auto use the latest kernel"
         required: false
@@ -92,12 +93,13 @@ on:
       builder_name:
         description: "Set OpenWrt builder signature."
         required: false
-        default: "ophub"
+        default: "zcanbin"
         type: choice
         options:
           - ophub
           - angel
           - yourname
+          - zcanbin
 
 env:
   TZ: America/New_York
@@ -156,7 +158,7 @@ jobs:
         working-directory: /builder
         if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
         run: |
-          armvirt_tarfile_repo="ophub/amlogic-s9xxx-openwrt"
+          armvirt_tarfile_repo="${GITHUB_REPOSITORY}"
           releases_tag_keywords="OpenWrt_lede_"
 
           armvirt_tarfile_path="openwrt/output"
@@ -190,14 +192,14 @@ jobs:
         working-directory: /builder
         if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
         run: |
-          SCRIPT_REPO_URL="https://github.com/unifreq/openwrt_packit"
+          SCRIPT_REPO_URL="https://github.com/${GITHUB_REPOSITORY_OWNER}/openwrt_packit"
           SCRIPT_REPO_BRANCH="master"
           SELECT_PACKITPATH="openwrt_packit"
           git clone -q --single-branch --depth=1 --branch=${SCRIPT_REPO_BRANCH} ${SCRIPT_REPO_URL} ${SELECT_PACKITPATH}
           ln -sf /builder/${SELECT_PACKITPATH} /opt/${SELECT_PACKITPATH}
 
       - name: Packaging OpenWrt
-        uses: ophub/flippy-openwrt-actions@main
+        uses: zcanbin/flippy-openwrt-actions@main
         if: ${{ steps.down.outputs.status }} == 'success' && !cancelled()
         env:
           OPENWRT_ARMVIRT: openwrt/output/*rootfs.tar.gz

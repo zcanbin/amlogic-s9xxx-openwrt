@@ -23,10 +23,11 @@ on:
       docker_img:
         description: "Set the docker image"
         required: false
-        default: "ophub/openwrt-aarch64:latest"
+        default: "zcanbin/openwrt-aarch64:latest"
         type: choice
         options:
           - ophub/openwrt-aarch64:latest
+          - zcanbin/openwrt-aarch64:latest
 
 env:
   TZ: America/New_York

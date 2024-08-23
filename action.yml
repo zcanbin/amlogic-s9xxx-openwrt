@@ -5,7 +5,7 @@ inputs:
   mode:
     description: "Select script."
     required: false
-    default: "ophub"
+    default: "zcanbin"
   openwrt_path:
     description: "Select armvirt64 file path."
     required: false
@@ -17,7 +17,7 @@ inputs:
   kernel_repo:
     description: "Select kernel repository."
     required: false
-    default: "ophub/kernel"
+    default: "zcanbin/kernel"
   kernel_usage:
     description: "Set the tags of the stable kernel."
     required: false
@@ -45,7 +45,7 @@ runs:
     - shell: bash
       run: |
         cd ${GITHUB_ACTION_PATH}
-        echo -e "ophub package actions path: [ ${PWD} ]"
+        echo -e "zcanbin package actions path: [ ${PWD} ]"
 
         openwrt_filename="${{ inputs.openwrt_path }}"
         openwrt_savefile="${openwrt_filename##*/}"
